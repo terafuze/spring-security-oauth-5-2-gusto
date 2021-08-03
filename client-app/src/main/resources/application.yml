@@ -16,37 +16,22 @@ spring:
     oauth2:
       client:
         registration:
-          messaging-client-auth-code:
-#            provider: keycloak
-#            client-id: messaging-client
-#            client-secret: secret
-            provider: gusto
+          gusto-client:
+            provider: gusto-provider
             client-id: igF4ABTff_pkvy8j8YT39bd1kaWpEq2Vc-Hal6Amlbk
             client-secret: iRlKbMWSaaCUTDjkkct1T-GpAgv3mde4OAT1dLw82Os
             authorization-grant-type: authorization_code
             redirect-uri: "http://localhost:8080/authorized/"
 #            redirect-uri: "https://lendwithconfidence.com/login/"
 #            scope: message.read,message.write
-          messaging-client-client-creds:
-            provider: keycloak
-            client-id: messaging-client
-            client-secret: secret
-            authorization-grant-type: client_credentials
-            scope: message.read,message.write
-          messaging-client-password:
-            provider: keycloak
-            client-id: messaging-client
-            client-secret: secret
-            authorization-grant-type: password
-            scope: message.read,message.write
         provider:
           keycloak:
             authorization-uri: http://auth-server:8090/auth/realms/oauth2-sample/protocol/openid-connect/auth
             token-uri: http://auth-server:8090/auth/realms/oauth2-sample/protocol/openid-connect/token
-          gusto:
+          gusto-provider:
             authorization-uri: https://api.gusto-demo.com/oauth/authorize
             token-uri: https://api.gusto-demo.com/oauth/token
 #  profiles:
 #    active: 
-messages:
-  base-uri: http://localhost:8092/messages
+gusto-api:
+  base-uri: https://api.gusto-demo.com/v1/me
