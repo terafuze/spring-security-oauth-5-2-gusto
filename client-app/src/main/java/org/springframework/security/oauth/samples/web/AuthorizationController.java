@@ -17,6 +17,8 @@ package org.springframework.security.oauth.samples.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth.samples.models.CurrentUserResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,17 +45,22 @@ public class AuthorizationController {
 	  
 		System.out.println("Wrong function");
 		
-	    String[] response = this.webClient
+	    ResponseEntity<CurrentUserResponse> response = this.webClient
 	          .get()
 	          .uri(this.currentUserEndpoint)
 	          .attributes(clientRegistrationId("gusto-client"))
 	          .retrieve()
-              .bodyToMono(String[].class)
+	          .toEntity(CurrentUserResponse.class)
+//              .bodyToMono(String[].class)
               .block();
 		
 	    System.out.print("Got HTTP Response!");
 	    
-	    System.out.println("Response.toString: " + response.toString());
+	    CurrentUserResponse currentUser=response.getBody();
+	    
+	    System.out.println("Current User: " + currentUser.toString());
+	    
+	    currentUser.getRoles().getPayroll_admin().getCompanies();
 	    
 //		model.addAttribute("messages", messages);
 		
