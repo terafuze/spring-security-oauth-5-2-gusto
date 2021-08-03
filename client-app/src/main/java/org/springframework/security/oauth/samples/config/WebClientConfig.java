@@ -15,6 +15,11 @@
  */
 package org.springframework.security.oauth.samples.config;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.client.OAuth2AuthorizationContext;
@@ -30,12 +35,6 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.util.StringUtils;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
-
 /**
  * @author Joe Grandja
  */
@@ -44,10 +43,13 @@ public class WebClientConfig {
 
 	@Bean
 	WebClient webClient(OAuth2AuthorizedClientManager authorizedClientManager) {
+	  
 		ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2Client =
 				new ServletOAuth2AuthorizedClientExchangeFilterFunction(authorizedClientManager);
+		
 		return WebClient.builder()
 				.apply(oauth2Client.oauth2Configuration())
+				.filter(WebClientFilter.logRequest())
 				.build();
 	}
 

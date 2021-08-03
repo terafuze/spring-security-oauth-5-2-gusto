@@ -31,8 +31,8 @@ import static org.springframework.security.oauth2.client.web.reactive.function.c
 @Controller
 public class AuthorizationController {
 
-	@Value("${gusto-api.base-uri}")
-	private String gustoApiURL;
+//	@Value("${gusto-api.base-uri}")
+	private String gustoApiURL = "https://api.gusto-demo.com/v1/me";
 
 	@Autowired
 	private WebClient webClient;
@@ -43,11 +43,13 @@ public class AuthorizationController {
 	  
 		System.out.println("Wrong function");
 		
-	      ResponseSpec response = this.webClient
+	    String[] response = this.webClient
 	          .get()
 	          .uri(this.gustoApiURL)
 	          .attributes(clientRegistrationId("gusto-client"))
-	          .retrieve();
+	          .retrieve()
+              .bodyToMono(String[].class)
+              .block();
 		
 	    System.out.print("Got HTTP Response!");
 	    
