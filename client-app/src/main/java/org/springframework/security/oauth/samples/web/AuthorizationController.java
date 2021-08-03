@@ -31,8 +31,8 @@ import static org.springframework.security.oauth2.client.web.reactive.function.c
 @Controller
 public class AuthorizationController {
 
-//	@Value("${gusto-api.base-uri}")
-	private String gustoApiURL = "https://api.gusto-demo.com/v1/me";
+	@Value("${gusto-api.current-user-endpoint}")
+	private String currentUserEndpoint;
 
 	@Autowired
 	private WebClient webClient;
@@ -45,7 +45,7 @@ public class AuthorizationController {
 		
 	    String[] response = this.webClient
 	          .get()
-	          .uri(this.gustoApiURL)
+	          .uri(this.currentUserEndpoint)
 	          .attributes(clientRegistrationId("gusto-client"))
 	          .retrieve()
               .bodyToMono(String[].class)

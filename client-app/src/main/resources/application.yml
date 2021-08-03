@@ -34,4 +34,4 @@ spring:
 #  profiles:
 #    active: 
 gusto-api:
-  base-uri: https://api.gusto-demo.com/v1/me
+  current-user-endpoint: https://api.gusto-demo.com/v1/me
