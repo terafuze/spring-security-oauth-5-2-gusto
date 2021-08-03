@@ -27,4 +27,10 @@ public class OAuthClientApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(OAuthClientApplication.class, args);
 	}
+	
+//@Configuration(proxyBeanMethods = false)
+//@Profile("production")
+//	public class ProductionConfiguration {
+//	
+//	}
 }

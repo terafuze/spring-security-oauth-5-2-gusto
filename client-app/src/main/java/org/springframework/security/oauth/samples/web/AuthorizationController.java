@@ -40,6 +40,7 @@ public class AuthorizationController {
 
 	@GetMapping(value = "/authorize", params = "grant_type=authorization_code")
 	public String authorization_code_grant(Model model) {
+		System.out.println("Wrong function");
 		String[] messages = retrieveMessages("messaging-client-auth-code");
 		model.addAttribute("messages", messages);
 		return "index";
@@ -47,9 +48,10 @@ public class AuthorizationController {
 
 	@GetMapping("/authorized")		// registered redirect_uri for authorization_code
 	public String authorized(Model model) {
-		String[] messages = retrieveMessages("messaging-client-auth-code");
-		model.addAttribute("messages", messages);
-		return "index";
+		System.out.println("redirect uri in authorized function");
+//		String[] messages = retrieveMessages("messaging-client-auth-code");
+//		model.addAttribute("messages", messages);
+		return "login";
 	}
 
 	@GetMapping(value = "/authorize", params = "grant_type=client_credentials")
