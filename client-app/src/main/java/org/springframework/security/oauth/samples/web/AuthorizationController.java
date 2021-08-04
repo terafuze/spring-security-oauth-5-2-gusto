@@ -15,6 +15,7 @@
  */
 package org.springframework.security.oauth.samples.web;
 
+import static org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction.clientRegistrationId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -22,14 +23,9 @@ import org.springframework.security.oauth.samples.models.CurrentUserResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
-import static org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction.clientRegistrationId;
 
-/**
- * @author Joe Grandja
- */
+
 @Controller
 public class AuthorizationController {
 
@@ -62,20 +58,8 @@ public class AuthorizationController {
 	    
 	    currentUser.getRoles().getPayroll_admin().getCompanies();
 	    
-//		model.addAttribute("messages", messages);
-		
 		return "index";
 	}
 
-	@GetMapping("/authorized")		// registered redirect_uri for authorization_code
-	public String authorized(Model model) {
-		
-	  System.out.println("redirect uri in authorized function");
-
-	  //		String[] messages = retrieveMessages("messaging-client-auth-code");
-	  //		model.addAttribute("messages", messages);
-
-	  return "login";
-	}
 
 }
