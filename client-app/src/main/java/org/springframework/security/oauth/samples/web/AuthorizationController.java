@@ -16,6 +16,8 @@
 package org.springframework.security.oauth.samples.web;
 
 import static org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction.clientRegistrationId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Controller
 public class AuthorizationController {
 
+    private static final Logger log = LoggerFactory.getLogger(AuthorizationController.class);
+  
 	@Value("${gusto-api.current-user-endpoint}")
 	private String currentUserEndpoint;
 
@@ -37,26 +41,24 @@ public class AuthorizationController {
 
 
 	@GetMapping(value = "/authorize", params = "grant_type=authorization_code")
-	public String authorization_code_grant(Model model) {
+	public String authorizationCoddeGrant(Model model) {
 	  
-		System.out.println("Wrong function");
+		log.debug("In AuthorizationController.authorizationCodeGrant() method");
 		
 	    ResponseEntity<CurrentUserResponse> response = this.webClient
 	          .get()
 	          .uri(this.currentUserEndpoint)
-	          .attributes(clientRegistrationId("gusto-client"))
+	          .attributes(clientRegistrationId("gusto-client-registration"))
 	          .retrieve()
 	          .toEntity(CurrentUserResponse.class)
 //              .bodyToMono(String[].class)
               .block();
 		
-	    System.out.print("Got HTTP Response!");
+	    log.debug("Got HTTP Response!");
 	    
 	    CurrentUserResponse currentUser=response.getBody();
 	    
-	    System.out.println("Current User: " + currentUser.toString());
-	    
-	    currentUser.getRoles().getPayroll_admin().getCompanies();
+	    log.info("Current User: " + currentUser.toString());
 	    
 		return "index";
 	}

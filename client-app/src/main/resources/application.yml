@@ -7,7 +7,7 @@ logging:
     org.springframework.web: INFO
     org.springframework.security: INFO
     org.springframework.security.oauth2: TRACE
-#    org.springframework.boot.autoconfigure: DEBUG
+    org.springframework.security.oauth.samples: DEBUG
 
 spring:
   thymeleaf:
@@ -16,7 +16,7 @@ spring:
     oauth2:
       client:
         registration:
-          gusto-client:
+          gusto-client-registration:
             provider: gusto-provider
             client-id: igF4ABTff_pkvy8j8YT39bd1kaWpEq2Vc-Hal6Amlbk
             client-secret: iRlKbMWSaaCUTDjkkct1T-GpAgv3mde4OAT1dLw82Os
