@@ -20,7 +20,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth.samples.models.CurrentUserResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,21 +44,21 @@ public class AuthorizationController {
 	  
 		log.debug("In AuthorizationController.authorizationCodeGrant() method");
 		
-	    ResponseEntity<CurrentUserResponse> response = this.webClient
+	     CurrentUserResponse response = this.webClient
 	          .get()
 	          .uri(this.currentUserEndpoint)
 	          .attributes(clientRegistrationId("gusto-client-registration"))
 	          .retrieve()
-	          .toEntity(CurrentUserResponse.class)
-//              .bodyToMono(String[].class)
+              .bodyToMono(CurrentUserResponse.class)
               .block();
 		
 	    log.debug("Got HTTP Response!");
 	    
-	    CurrentUserResponse currentUser=response.getBody();
+	    CurrentUserResponse currentUser = response;
 	    
-	    log.info("Current User: " + currentUser.toString());
+	    log.info("Current User: {}", currentUser.toString());
 	    
+	    // display the index web page (see /src/main/resources/templates/index.html)
 		return "index";
 	}
 
