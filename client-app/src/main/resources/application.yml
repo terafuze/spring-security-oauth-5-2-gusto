@@ -8,6 +8,7 @@ logging:
     org.springframework.security: INFO
     org.springframework.security.oauth2: TRACE
     org.springframework.security.oauth.samples: DEBUG
+    reactor.netty: DEBUG  # See https://github.com/reactor/reactor-netty/issues/233
 
 spring:
   thymeleaf:
