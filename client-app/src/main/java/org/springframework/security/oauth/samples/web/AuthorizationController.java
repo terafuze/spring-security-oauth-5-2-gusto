@@ -16,11 +16,13 @@
 package org.springframework.security.oauth.samples.web;
 
 import static org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction.clientRegistrationId;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth.samples.models.CurrentUserResponse;
+import org.springframework.security.oauth.samples.models.Employee;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +36,8 @@ public class AuthorizationController {
   
 	@Value("${gusto-api.current-user-endpoint}")
 	private String currentUserEndpoint;
+	
+	private String employeesEndpoint = "https://api.gusto-demo.com/v1/companies/{companyId}/employees";
 
 	@Autowired
 	private WebClient webClient;
@@ -44,20 +48,26 @@ public class AuthorizationController {
 	  
 		log.debug("In AuthorizationController.authorizationCodeGrant() method");
 		
-	     CurrentUserResponse response = this.webClient
-	          .get()
+	     CurrentUserResponse response = this.webClient.get()
 	          .uri(this.currentUserEndpoint)
 	          .attributes(clientRegistrationId("gusto-client-registration"))
 	          .retrieve()
               .bodyToMono(CurrentUserResponse.class)
               .block();
-		
 	    log.debug("Got HTTP Response!");
-	    
-	    CurrentUserResponse currentUser = response;
-	    
+	    CurrentUserResponse currentUser = response;   
 	    log.info("Current User: {}", currentUser.toString());
 	    
+	    Long companyId = currentUser.getRoles().getPayroll_admin().getCompanies().get(0).getId();
+        Employee[] employees = this.webClient.get()
+            .uri(this.employeesEndpoint, companyId)
+            .attributes(clientRegistrationId("gusto-client-registration"))
+            .retrieve()
+            .bodyToMono(Employee[].class)
+            .block();
+        log.debug("Got Employees!"); 
+        log.info("Employee[0]: {}", employees[0].toString());
+      
 	    // display the index web page (see /src/main/resources/templates/index.html)
 		return "index";
 	}
