@@ -37,6 +37,7 @@ public class AuthorizationController {
 	@Value("${gusto-api.current-user-endpoint}")
 	private String currentUserEndpoint;
 	
+//	@Value("${gusto-api.current-user-endpoint}")
 	private String employeesEndpoint = "https://api.gusto-demo.com/v1/companies/{companyId}/employees";
 
 	@Autowired
