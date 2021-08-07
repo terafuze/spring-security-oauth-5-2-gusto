@@ -16,7 +16,6 @@
 package org.springframework.security.oauth.samples.web;
 
 import static org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction.clientRegistrationId;
-import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +43,7 @@ public class AuthorizationController {
 	private WebClient webClient;
 
 
-	@GetMapping(value = "/authorize", params = "grant_type=authorization_code")
+	@GetMapping(value = "/authorize")
 	public String authorizationCoddeGrant(Model model) {
 	  
 		log.debug("In AuthorizationController.authorizationCodeGrant() method");

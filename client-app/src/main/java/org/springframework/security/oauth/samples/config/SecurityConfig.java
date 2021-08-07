@@ -24,6 +24,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 
 /**
  * @author Joe Grandja
@@ -44,16 +46,44 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// @formatter:off
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http
-			.authorizeRequests()
-				.anyRequest().permitAll()
-				.and()
-			.formLogin()
-				.loginPage("/login")
-				.failureUrl("/login-error")
-				.permitAll()
-				.and()
-			.oauth2Client();
+	  
+      http
+      .csrf()
+      .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+  .and()
+      .headers()
+      .contentSecurityPolicy("default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:")
+  .and()
+      .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
+  .and()
+      .featurePolicy("geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; speaker 'none'; fullscreen 'self'; payment 'none'")
+  .and()
+      .frameOptions()
+      .deny()
+  .and()
+      .authorizeRequests()
+      .antMatchers("/api/auth-info").permitAll()
+      .antMatchers("/api/**").authenticated()
+      .antMatchers("/management/health").permitAll()
+      .antMatchers("/management/info").permitAll()
+      .antMatchers("/management/prometheus").permitAll()
+  .and()
+      // Configures authentication support using an OAuth 2.0 and/or OpenID Connect 1.0 Provider. 
+      // The "authentication flow" is implemented using the Authorization Code Grant, as specified in the OAuth 2.0 Authorization Framework and OpenID Connect Core 1.0 specification. 
+      .oauth2Login()
+  .and()
+          .oauth2Client();
+	  
+//		http
+//			.authorizeRequests()
+//				.anyRequest().permitAll()
+//				.and()
+//			.formLogin()
+//				.loginPage("/login")
+//				.failureUrl("/login-error")
+//				.permitAll()
+//				.and()
+//			.oauth2Client();
 	}
 	// @formatter:on
 

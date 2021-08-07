@@ -22,9 +22,7 @@ spring:
             client-id: igF4ABTff_pkvy8j8YT39bd1kaWpEq2Vc-Hal6Amlbk
             client-secret: iRlKbMWSaaCUTDjkkct1T-GpAgv3mde4OAT1dLw82Os
             authorization-grant-type: authorization_code
-            redirect-uri: "http://google.com/api/authorized/adgj"
-#            redirect-uri: "https://lendwithconfidence.com/login/"
-#            scope: message.read,message.write
+            redirect-uri: '{baseUrl}/authorized/'
         provider:
           keycloak:
             authorization-uri: http://auth-server:8090/auth/realms/oauth2-sample/protocol/openid-connect/auth
