@@ -8,6 +8,8 @@ logging:
     org.springframework.security: INFO
     org.springframework.security.oauth2: TRACE
     org.springframework.security.oauth.samples: DEBUG
+    org.springframework.web.reactive.function.client: TRACE
+    org.springframework.security.oauth2.client: TRACE
     reactor.netty: DEBUG  # See https://github.com/reactor/reactor-netty/issues/233
 
 spring:
@@ -17,21 +19,18 @@ spring:
     oauth2:
       client:
         registration:
-          gusto-client-registration:
-            provider: gusto-provider
+          gusto:
+            provider: gusto
             client-id: igF4ABTff_pkvy8j8YT39bd1kaWpEq2Vc-Hal6Amlbk
             client-secret: iRlKbMWSaaCUTDjkkct1T-GpAgv3mde4OAT1dLw82Os
             authorization-grant-type: authorization_code
             redirect-uri: '{baseUrl}/authorized/'
         provider:
-          keycloak:
-            authorization-uri: http://auth-server:8090/auth/realms/oauth2-sample/protocol/openid-connect/auth
-            token-uri: http://auth-server:8090/auth/realms/oauth2-sample/protocol/openid-connect/token
-          gusto-provider:
+          gusto:
             authorization-uri: https://api.gusto-demo.com/oauth/authorize
             token-uri: https://api.gusto-demo.com/oauth/token
 #  profiles:
 #    active: 
 gusto-api:
   current-user-endpoint: https://api.gusto-demo.com/v1/me
-#  employee-endpoint:  https://api.gusto-demo.com/v1/companies/{companyId}/employees
+  employees-endpoint: https://api.gusto-demo.com/v1/companies/7756341741017369/employees
