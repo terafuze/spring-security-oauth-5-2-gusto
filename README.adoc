@@ -14,3 +14,4 @@ To view and edit the code in Eclipse, import the `client-app` directory as an ex
 
 See the settings in the `src/main/resources/application.yml` file.
 
+This code was adapted from the [Spring Security OAuth 5.2 Migration sample|https://github.com/jgrandja/spring-security-oauth-5-2-migrate]
