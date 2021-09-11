@@ -13,3 +13,4 @@ The code that is being used here is the code in the `client-app` subdirectory.
 To view and edit the code in Eclipse, import the `client-app` directory as an existing maven project. 
 
 See the settings in the `src/main/resources/application.yml` file.
+
