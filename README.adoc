@@ -1,61 +1,15 @@
+The goal of this application is to demonstrate the automatic HTTP redirect to the Gusto login page when the Spring Webflux `WebClient` class invokes a Gusto API.
 
+This code works as expected. The problem is that I cannot get the same code to work in a JHipster generated application. I have an example JHipster application in Github with the same (well, very similar) code for invoking the Gusto API. However, the redirection doesn't happen in the JHipster based application. See https://github.com/nward1234/jhipster7-oauth-sample.
 
-* From the top-level directory, execute the command`./mvnw -f client-app spring-boot:run`
+* From the top-level directory, execute the command `./mvnw -f client-app spring-boot:run`
   * This runs the build setup in the client-app directory
-* Go to `http://localhost:8080` and login using *user1/password*
-* Once logged in, click on the **Authorization Code** link. You will be redirected to the demo Gusto login page. 
+* Go to `http://localhost:8080/api/current-user`. 
+* The browser will redirect to the Gusto Login page and the Gusto Login page will be displayed.
 
 This is as far as I have gotten. I don't have the login information for Gusto. 
-
-Once you login to Gusto, the browser should redirect back to the sample application with an Auth Code
-and the auth code can then be exchanged for an Access Token. Not sure if the code is setup for this or not. 
 
 The code that is being used here is the code in the `client-app` subdirectory. 
 To view and edit the code in Eclipse, import the `client-app` directory as an existing maven project. 
 
-See the settings in the application.yml file.
-
-Also, look at `sro/main/resources/templates/index.html`. This is the HTML for the webpage that has
-the **Authorization Code** link that redirected to Gusto. 
-
-See Line 41 in `index.html`...
-
-```
-<a href="/authorize?grant_type=authorization_code" th:href="@{/authorize?grant_type=authorization_code}"><span style="font-size:medium">Authorization Code</span>&nbsp;&nbsp;<small class="text-muted">(Login to Keycloak using: user1/password)</small></a>
-```
-
-We need to do something like this in Angular. However, this is not the exact syntax that we need because This
-is not Angular code. (This is using something called Thymeleaf Templates). 
-
-```
-{
-    "id": 7757869450533269,
-    "uuid": "1f3689bf-2208-4435-b3ce-3ac84e7feca1",
-    "email": "nolanward@turtlefuse.com",
-    "roles": {
-        "payroll_admin": {
-            "companies": [
-                {
-                    "id": 7756341741017369,
-                    "uuid": "dbc28a7e-d1c7-4822-9997-5a65ddd371ea",
-                    "name": "turtlefuse",
-                    "trade_name": "",
-                    "tier": "concierge",
-                    "locations": [
-                        {
-                            "id": 7757727717124916,
-                            "street_1": "912 Silver St.",
-                            "street_2": "Suite 1966",
-                            "city": "San Francisco",
-                            "state": "CA",
-                            "zip": "94107",
-                            "country": "USA",
-                            "active": true
-                        }
-                    ]
-                }
-            ]
-        }
-    }
-}
-```
+See the settings in the `src/main/resources/application.yml` file.
